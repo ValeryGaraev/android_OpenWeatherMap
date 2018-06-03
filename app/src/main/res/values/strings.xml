@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">OpenWeatherMap</string>
+    <string name="city_field">Enter city</string>
+    <string name="get_weather">Get Weather</string>
+    <string name="city">City: </string>
+    <string name="temperature">Temperature: </string>
+    <string name="pressure">Pressure:</string>
+    <string name="humidity">Humidity:</string>
+    <string name="weather_condition">Weather condition:</string>
+    <string name="wind_speed">Wind speed:</string>
+    <string name="condition_picture">Weather condition picture</string>
+</resources>
