@@ -15,10 +15,17 @@ import java.net.URL;
 
 class WeatherService {
 
-    private JSONObject fetchData(String city) throws IOException, JSONException {
+    private JSONObject fetchData(String city, boolean check_activity) throws IOException, JSONException {
 
-        String query = String.format
-                ("http://api.openweathermap.org/data/2.5/weather?q=%s&APPID=9f1c6da33186cff18e6aa50ac4532cc0&units=metric", city);
+        String query;
+
+        if (!check_activity) {
+            query = String.format
+                    ("http://api.openweathermap.org/data/2.5/weather?q=%s&APPID=9f1c6da33186cff18e6aa50ac4532cc0&units=metric", city);
+        } else {
+            query = String.format
+                    ("http://api.openweathermap.org/data/2.5/forecast?q=%s&APPID=9f1c6da33186cff18e6aa50ac4532cc0&units=metric", city);
+        }
 
         URL url = new URL(query);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -64,9 +71,9 @@ class WeatherService {
         return weather;
     }
 
-    public WeatherData getWeather(String city) throws IOException, JSONException {
+    public WeatherData getWeather(String city, boolean is_weekly) throws IOException, JSONException {
 
-        JSONObject json = fetchData(city);
+        JSONObject json = fetchData(city, is_weekly);
         return parseData(json);
 
     }

@@ -2,6 +2,7 @@ package com.example.valery.openweathermap;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         get_button.setClickable(true);
     }
 
-    public void buttonClicked(View view) {
+    public void getButtonClicked(View view) {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         assert connectivityManager != null;
@@ -76,6 +77,26 @@ public class MainActivity extends AppCompatActivity {
         if (connected) {
             String city_string = city.getText().toString();
             new RequestWeather().execute(city_string);
+        } else {
+            toast.setText("Check your connection");
+            toast.show();
+        }
+    }
+
+    public void forecastButtonClicked(View view) {
+
+        Intent switch_to_weekly = new Intent(this, WeeklyForecast.class);
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connectivityManager != null;
+
+        boolean connected;
+
+        connected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
+
+        if (connected) {
+            startActivity(switch_to_weekly);
         } else {
             toast.setText("Check your connection");
             toast.show();
@@ -103,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         protected WeatherData doInBackground(String... strings) {
             WeatherService service = new WeatherService();
             try {
-                return service.getWeather(strings[0]);
+                return service.getWeather(strings[0], false);
             } catch (IOException e) {
                 Log.i("REQUEST_WEATHER", e.getMessage());
             } catch (JSONException e) {

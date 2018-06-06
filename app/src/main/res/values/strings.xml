@@ -9,4 +9,5 @@
     <string name="weather_condition">Weather condition:</string>
     <string name="wind_speed">Wind speed:</string>
     <string name="condition_picture">Weather condition picture</string>
+    <string name="weekly_forecast">Weekly Forecast</string>
 </resources>
