@@ -10,4 +10,7 @@
     <string name="wind_speed">Wind speed:</string>
     <string name="condition_picture">Weather condition picture</string>
     <string name="weekly_forecast">Weekly Forecast</string>
+    <string name="forecast_title">5 days forecast for</string>
+    <string name="date">Date:</string>
+    <string name="day">Today</string>
 </resources>

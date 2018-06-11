@@ -1,5 +1,9 @@
 package com.example.valery.openweathermap;
 
+
+import com.example.valery.openweathermap.entities.ReceivedWeather;
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,29 +56,35 @@ class WeatherService {
 
     }
 
-    private WeatherData parseData(JSONObject json) {
+    private Object parseData(JSONObject json, boolean check_activity) {
 
-        WeatherData weather = new WeatherData();
+        if (!check_activity) {
 
-        try {
-            weather.city = json.getString("name");
-            weather.temperature = json.getJSONObject("main").getDouble("temp");
-            weather.pressure = json.getJSONObject("main").getInt("pressure");
-            weather.humidity = json.getJSONObject("main").getInt("humidity");
-            weather.weather_condition = json.getJSONArray("weather").getJSONObject(Integer.parseInt("0")).getString("description");
-            weather.condition_picture_id = json.getJSONArray("weather").getJSONObject(Integer.parseInt("0")).getString("icon");
-            weather.wind_speed = json.getJSONObject("wind").getInt("speed");
-        } catch (JSONException e) {
-            e.printStackTrace();
+            WeatherData weather = new WeatherData();
+
+            try {
+                weather.city = json.getString("name");
+                weather.temperature = json.getJSONObject("main").getDouble("temp");
+                weather.pressure = json.getJSONObject("main").getInt("pressure");
+                weather.humidity = json.getJSONObject("main").getInt("humidity");
+                weather.weather_condition = json.getJSONArray("weather").getJSONObject(Integer.parseInt("0")).getString("description");
+                weather.condition_picture_id = json.getJSONArray("weather").getJSONObject(Integer.parseInt("0")).getString("icon");
+                weather.wind_speed = json.getJSONObject("wind").getInt("speed");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return weather;
+        } else {
+            ReceivedWeather receivedWeather = new Gson().fromJson(json.toString(), ReceivedWeather.class);
+            return receivedWeather;
         }
-
-        return weather;
     }
 
-    public WeatherData getWeather(String city, boolean is_weekly) throws IOException, JSONException {
+    public Object getWeather(String city, boolean is_weekly) throws IOException, JSONException {
 
         JSONObject json = fetchData(city, is_weekly);
-        return parseData(json);
+        return parseData(json, is_weekly);
 
     }
 }

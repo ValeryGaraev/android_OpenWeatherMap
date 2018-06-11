@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".WeeklyForecast">
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forecast_recycler_view">
+
+    </android.support.v7.widget.RecyclerView>
+
 </android.support.constraint.ConstraintLayout>

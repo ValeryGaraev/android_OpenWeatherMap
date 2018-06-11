@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
 
         if (connected) {
+            String city_string = city.getText().toString();
+            switch_to_weekly.putExtra("city", city_string);
             startActivity(switch_to_weekly);
         } else {
             toast.setText("Check your connection");
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         protected WeatherData doInBackground(String... strings) {
             WeatherService service = new WeatherService();
             try {
-                return service.getWeather(strings[0], false);
+                return (WeatherData) service.getWeather(strings[0], false);
             } catch (IOException e) {
                 Log.i("REQUEST_WEATHER", e.getMessage());
             } catch (JSONException e) {
